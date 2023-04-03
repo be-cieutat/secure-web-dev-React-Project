@@ -1,5 +1,5 @@
 .container {
-    max-width: 600px;
+    height: auto;
     margin: 0 auto;
     padding: 2rem;
     background-color: #f7f7f7;
@@ -57,6 +57,24 @@ button[type="submit"]:hover {
 .page-item {
     margin: 0 0.5rem;
 }
+
+.item-title {
+    text-align: left;
+    text-justify: inter-character;
+}
+
+.details-table{
+    border-collapse: collapse;
+    width: 100%;
+    text-align: left;
+}
+
+.details-table > th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
 
 .page-link {
     display: block;

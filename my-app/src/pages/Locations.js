@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Locations.css";
+//import Navbar from "../components/navbar";
+//import Table from "../components/locationTable";
 
 function PaginatedList() {
     const [items, setItems] = useState([]);
@@ -8,15 +10,25 @@ function PaginatedList() {
     const [itemsPerPage] = useState(10);
     const [searchTerm, setSearchTerm] = useState("");
 
+    const options = {
+        method: "GET",
+        url: "http://localhost:3000/locations",
+        params: { offset: "0", limit: "200" },
+        headers: {
+            Authorization:
+                "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJhZTVmMWYyMGQwOTNkMWM2ZGIxZTUiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2ODA1MzQwNjR9.lyzVQApXko4OSohyZj6_3PRq_pef_kukcV_9kBKLe1Y",
+        },
+    };
+
     useEffect(() => {
-        // Fetch the data from the API
         axios
-            .get("https://jsonplaceholder.typicode.com/posts")
-            .then((response) => {
+            .request(options)
+            .then(function (response) {
+                console.log(response.data);
                 setItems(response.data);
             })
-            .catch((error) => {
-                console.log(error);
+            .catch(function (error) {
+                console.error(error);
             });
     }, []);
 
@@ -35,12 +47,12 @@ function PaginatedList() {
 
     // Filter the items based on the search term
     const filteredItems = currentItems.filter((item) =>
-        item.title.toLowerCase().includes(searchTerm.toLowerCase())
+        item.nom_tournage.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
         <div className="container">
-            <h2 className="title">My Paginated List</h2>
+            <h2 className="title">LieuxDeTournage.com</h2>
             <div className="search-container">
                 <input
                     type="text"
@@ -52,9 +64,34 @@ function PaginatedList() {
             </div>
             <ul className="list">
                 {filteredItems.map((item) => (
-                    <li key={item.id} className="item">
-                        <h3 className="item-title">{item.title}</h3>
-                        <p className="item-body">{item.body}</p>
+                    <li key={item._id} className="location">
+                        <h3 className="item-title">{item.annee_tournage} | {item.adresse_lieu}</h3>
+                        <div>
+                            <table className="details-table">
+                                <tbody>
+                                <tr>
+                                    <td>ID Lieu:</td>
+                                    <td>{item.id_lieu}</td>
+                                </tr>
+                                <tr>
+                                    <td>Adresse:</td>
+                                    <td>{item.adresse_lieu}</td>
+                                </tr>
+                                <tr>
+                                    <td>Année de tournage:</td>
+                                    <td>{item.annee_tournage}</td>
+                                </tr>
+                                <tr>
+                                    <td>Arrondissement:</td>
+                                    <td>{item.ardt_lieu}</td>
+                                </tr>
+                                <tr>
+                                    <td>Coordonnées:</td>
+                                    <td>({item.coord_x}, {item.coord_y})</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </li>
                 ))}
             </ul>
@@ -64,6 +101,7 @@ function PaginatedList() {
                 paginate={paginate}
                 className="pagination"
             />
+
         </div>
     );
 }

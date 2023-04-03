@@ -9,8 +9,6 @@ function Register() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Here you can add your logic to register the user
-        // For the purpose of this example, we will just set registered to true
         setRegistered(true);
     };
 
