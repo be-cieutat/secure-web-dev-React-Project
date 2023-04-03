@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../styles/Locations.css";
+import Banner from "../components/banner";
 //import Navbar from "../components/navbar";
 //import Table from "../components/locationTable";
 
@@ -52,7 +53,7 @@ function PaginatedList() {
 
     return (
         <div className="container">
-            <h2 className="title">LieuxDeTournage.com</h2>
+            <Banner/>
             <div className="search-container">
                 <input
                     type="text"
@@ -88,6 +89,10 @@ function PaginatedList() {
                                 <tr>
                                     <td>Coordonnées:</td>
                                     <td>({item.coord_x}, {item.coord_y})</td>
+                                </tr>
+                                <tr>
+                                    <td>Tournage:</td>
+                                    <td>{item.nom_tournage}</td>
                                 </tr>
                                 </tbody>
                             </table>
